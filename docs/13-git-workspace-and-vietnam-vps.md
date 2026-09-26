@@ -10,7 +10,7 @@ Source, manifests, lockfile, tests, Markdown decisions and design exports belong
 
 Before the initial commit, candidate files were checked for common credential patterns. Two matches were verified as SHA-512 package integrity values in the pnpm lockfile, not secrets. This focused inspection is not a guarantee that every possible secret format can be detected.
 
-GitHub authentication and publishing status will be recorded after the attempted operation. A connected read/write connector does not necessarily provide repository creation or authenticate the local Git client.
+Local initialization and the initial commit are complete on `main`. GitHub creation/push is pending authentication: the connector identifies the connected `takashilouis` profile but exposes no repository-creation operation; GitHub CLI is unavailable, Git Credential Manager lists no GitHub account, and the browser repository-creation page redirects to sign-in. The sign-in tab is left open for the user. No remote repository has been created and no files have been pushed. After sign-in, create private `takashilouis/wachatbot`, authenticate Git through its normal flow if required, push `main`, and verify the remote commit. Never paste access tokens into documentation or chat.
 
 ## Why node_modules exists at the root
 
