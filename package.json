@@ -1,0 +1,39 @@
+{
+  "name": "wachatbot",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "engines": { "node": ">=24.19.0 <25", "pnpm": ">=10.32.1 <11" },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "pnpm dev:frontend",
+    "dev:frontend": "pnpm --filter @wachatbot/web dev",
+    "dev:backend": "pnpm build:services && concurrently --kill-others -n api-build,api,worker-build,worker \"pnpm --filter @wachatbot/api dev:build\" \"pnpm --filter @wachatbot/api dev\" \"pnpm --filter @wachatbot/worker dev:build\" \"pnpm --filter @wachatbot/worker dev\"",
+    "build:frontend": "pnpm --filter @wachatbot/web build",
+    "check:frontend": "pnpm --filter @wachatbot/web lint && pnpm --filter @wachatbot/web typecheck && pnpm build:frontend",
+    "start:frontend": "pnpm --filter @wachatbot/web start",
+    "test:frontend": "pnpm --filter @wachatbot/web test:e2e",
+    "build:services": "pnpm --filter @wachatbot/api --filter @wachatbot/worker build",
+    "build": "pnpm -r build",
+    "start": "pnpm start:frontend",
+    "lint": "eslint scripts --max-warnings=0 && pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "check": "pnpm lint && pnpm typecheck && pnpm build",
+    "smoke": "node scripts/smoke.mjs --frontend-only",
+    "smoke:all": "node scripts/smoke.mjs",
+    "infra:up": "docker compose up -d --wait",
+    "infra:down": "docker compose down",
+    "infra:status": "docker compose ps",
+    "infra:check": "node scripts/infra-check.mjs",
+    "infra:logs": "docker compose logs --tail=100"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.10.1",
+    "concurrently": "10.0.5",
+    "eslint": "10.11.0",
+    "pnpm": "10.32.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.1"
+  }
+}

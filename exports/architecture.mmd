@@ -1,0 +1,77 @@
+flowchart TB
+    subgraph PEOPLE["USERS"]
+        direction LR
+        CUSTOMER["CUSTOMER<br/>Vietnamese-first conversations"]
+        STAFF["STAFF / ADMIN<br/>Support, closing and configuration"]
+    end
+    subgraph APPS["APPLICATIONS"]
+        direction LR
+        WA["WHATSAPP APPLICATION<br/>Messages, photos and voice notes<br/>Receive bot and staff replies"]
+        WEB["STAFF WEB APP<br/>Shared inbox · Customer cases<br/>Human takeover · Workflow editor"]
+    end
+    subgraph META["META PLATFORM"]
+        API["WHATSAPP CLOUD API<br/>Connected business numbers<br/>Incoming webhooks · Outgoing messages<br/>Delivery and read-status events"]
+    end
+    subgraph PLATFORM["OUR PLATFORM"]
+        GATEWAY["MESSAGING GATEWAY<br/>Verify events · Prevent duplicates<br/>Route by business number · Queue messages"]
+        CORE["APPLICATION BACKEND<br/>Staff permissions · Conversation history<br/>Live inbox updates · Account configuration"]
+        ROUTER{"CONVERSATION CONTROL<br/>Bot or assigned staff?"}
+        BOT["VIETNAMESE AI ASSISTANT<br/>Understand intent and context<br/>Retrieve knowledge · Draft responses"]
+        FLOW["BUSINESS WORKFLOW ENGINE<br/>Collect details · Apply business rules<br/>Confirm customer intent · Track outcomes"]
+        HANDOFF["HUMAN HANDOFF<br/>Pause bot · Assign staff<br/>Summarize context · Track waiting cases"]
+        SEND["OUTBOUND MESSAGE SERVICE<br/>Check conversation ownership<br/>Check messaging window / template<br/>Send through the correct business number"]
+    end
+    subgraph DATA["DATA & KNOWLEDGE"]
+        DB[("APPLICATION DATABASE<br/>Customers · Messages · Cases<br/>Assignments · Workflow state · Audit log")]
+        KB[("APPROVED KNOWLEDGE<br/>FAQs · Services · Policies<br/>Vietnamese response guidance")]
+        MEDIA[("PRIVATE MEDIA STORAGE<br/>Images · Voice notes · Documents")]
+    end
+    subgraph EXTERNAL["EXTERNAL SERVICES"]
+        LLM["AI MODEL PROVIDER<br/>Language understanding<br/>Response generation"]
+        BUSINESS["BUSINESS SYSTEMS<br/>CRM · Booking · Orders / Inventory<br/>Payment status, where applicable"]
+    end
+    CUSTOMER <--> WA
+    STAFF <--> WEB
+    WA <-->|Customer messages / business replies| API
+    API -->|Incoming messages and status events| GATEWAY
+    GATEWAY --> CORE
+    WEB <-->|Staff actions / live updates| CORE
+    CORE --> ROUTER
+    ROUTER -->|Bot active| BOT
+    ROUTER -->|Staff handling or waiting| HANDOFF
+    HANDOFF -->|Assignment and context| CORE
+    BOT -->|Needs staff| HANDOFF
+    BOT <--> FLOW
+    BOT <-->|Model requests / results| LLM
+    BOT -->|Read approved content| KB
+    FLOW <-->|Validated actions / actual results| BUSINESS
+    FLOW -->|Bot reply or confirmed outcome| SEND
+    CORE -->|Staff-authored reply| SEND
+    SEND -->|Outgoing business message| API
+    API -->|Replies and status updates| WA
+    CORE <--> DB
+    FLOW <--> DB
+    GATEWAY --> MEDIA
+    CORE --> MEDIA
+    classDef person fill:#EDE9FE,stroke:#7C3AED,color:#3B0764,stroke-width:2px
+    classDef whatsapp fill:#DCFCE7,stroke:#16A34A,color:#14532D,stroke-width:2px
+    classDef web fill:#DBEAFE,stroke:#2563EB,color:#1E3A8A,stroke-width:2px
+    classDef processing fill:#FFF3D6,stroke:#D97706,color:#78350F,stroke-width:2px
+    classDef ai fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:2px
+    classDef handoff fill:#FFE4E6,stroke:#E11D48,color:#881337,stroke-width:2px
+    classDef data fill:#CFFAFE,stroke:#0891B2,color:#164E63,stroke-width:2px
+    classDef external fill:#F1F5F9,stroke:#64748B,color:#0F172A,stroke-width:2px
+    class CUSTOMER,STAFF person
+    class WA,API whatsapp
+    class WEB,CORE web
+    class GATEWAY,ROUTER,FLOW,SEND processing
+    class BOT,LLM ai
+    class HANDOFF handoff
+    class DB,KB,MEDIA data
+    class BUSINESS external
+    style PEOPLE fill:#FAF5FF,stroke:#C4B5FD,color:#3B0764
+    style APPS fill:#F8FAFC,stroke:#94A3B8,color:#0F172A
+    style META fill:#F0FDF4,stroke:#86EFAC,color:#14532D
+    style PLATFORM fill:#FFFBEB,stroke:#F59E0B,color:#78350F
+    style DATA fill:#ECFEFF,stroke:#67E8F9,color:#164E63
+    style EXTERNAL fill:#F8FAFC,stroke:#94A3B8,color:#0F172A
