@@ -14,6 +14,8 @@ Local initialization and the initial commit are complete on `main`. On 2026-09-2
 
 ## Why node_modules exists at the root
 
+Publication update (2026-09-26): the user completed GitHub device authentication. The initial push to `takashilouis/wa-chatbot-platform` succeeded, and local `main` now tracks `origin/main`. Secrets and generated dependencies/build outputs remain excluded.
+
 This project is a pnpm workspace (one repository with several packages). Both frontend and backend use Node.js:
 
 ```text
