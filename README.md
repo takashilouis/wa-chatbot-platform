@@ -29,6 +29,8 @@ Open http://127.0.0.1:3000/login. Choose a demo account, then click **Đăng nh�
 11. [S1-008 frontend](docs/11-s1-008-frontend.md) — implemented UI scope, demo accounts, verification and future auth integration.
 12. [Remote Docker options](docs/12-remote-docker-options.md) — cloud development and staging recommendations for a restricted laptop.
 13. [Git, workspace dependencies and Vietnam VPS](docs/13-git-workspace-and-vietnam-vps.md) — repository setup, why root node_modules is correct, sizing and provider shortlist.
+14. [Inbox frontend contract](docs/14-inbox-frontend-contract.md) — types, pagination, events and backend obligations.
+15. [Frontend staging and inbox verification](docs/15-frontend-staging-and-inbox-verification.md) — Vercel setup and S1-009/016/017 scope and evidence.
 
 ## Architecture exports
 

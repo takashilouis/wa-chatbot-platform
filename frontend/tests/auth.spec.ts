@@ -87,6 +87,7 @@ test('mobile layout and keyboard login work without backend requests', async ({ 
   page.on('request', request => { if (/:(3001|3002)\b|api\.openai|graph\.facebook/.test(request.url())) backendRequests.push(request.url()); });
   await page.goto('/login');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await expect(page.getByRole('button', { name: 'Đăng nhập', exact: true })).toBeEnabled();
   await page.screenshot({ path: 'test-results/login-mobile.png', fullPage: true });
   await page.getByRole('button', { name: /Nhân viên linh/ }).click();
   await page.getByLabel('Mật khẩu', { exact: true }).press('Enter');

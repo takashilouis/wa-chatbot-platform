@@ -4,6 +4,8 @@ Baseline: 2026-09-24. Record new decisions below with date, owner and reason. Do
 
 ## Decision register
 
+2026-09-27: User authorized S1-009, S1-016 and S1-017 frontend implementation. Inbox uses public synthetic data until BE resumes. Vercel staging configuration is prepared; actual deployment requires the user's Vercel team/project access. Backend pause remains in force. See [delivery evidence](15-frontend-staging-and-inbox-verification.md).
+
 | ID | Topic | Status | Decision / rationale |
 |---|---|---|---|
 | DEC-01 | Work authorization | Confirmed, updated 2026-09-25 | User temporarily stopped S1-006 and backend implementation due to GA laptop restrictions; authorized explicit frontend/backend separation and S1-008 FE now |

@@ -109,6 +109,10 @@ Testing starts with the feature it verifies; days 9–10 are for integrated acce
 ### S1-009 — Deploy an early staging skeleton
 
 - [ ] **Owner:** BE + FE. **Dependencies:** S1-004, S1-006–008.
+- **FE status (2026-09-27):** Vercel configuration, build identification and process-only health implemented; live staging is blocked on Vercel team/project access and sign-in. No staging URL verified. [Setup/evidence](15-frontend-staging-and-inbox-verification.md).
+- [x] **S1-009-FE preparation:** Frontend deployment configuration and reproducible runbook.
+- [ ] **S1-009-FE deployment:** Deploy and verify HTTPS URL, build identity, demo login and inbox; waiting for user Vercel access.
+- [ ] **S1-009-BE — paused:** API/worker deployment and persistent infrastructure acceptance.
 - **Work:** Deploy website, API and worker with HTTPS, persistent database/queue, secrets and health/readiness checks. Separate staging configuration and data from future production. Record build/version identification.
 - **Deliverable:** Staging URL and reproducible deployment procedure.
 - **Acceptance:** Staff can log in remotely; restarts use persistent data; readiness reports unavailable dependencies accurately. Update this deployment throughout the sprint.
@@ -162,6 +166,9 @@ Testing starts with the feature it verifies; days 9–10 are for integrated acce
 ### S1-016 — Define inbox APIs and live-update contracts
 
 - [ ] **Owner:** BE + FE. **Dependencies:** S1-007–008.
+- **FE scope:** Typed conversation/message/page/error/event contracts, cancellable synthetic adapter, snapshot reload on events/reconnect and subscription cleanup. [Contract](14-inbox-frontend-contract.md). This does not implement a protected server channel.
+- [x] **S1-016-FE:** Complete for the mock/contract scope on 2026-09-27. Cursor, cancellation, subscription cleanup, event reload and reconnect UI tests passed. Parent task remains open for protected backend transport.
+- [ ] **S1-016-BE — paused:** Real endpoints, cursor/snapshot semantics, authenticated subscriptions, workspace/resource authorization and replay/reconnect security tests.
 - **Work:** Agree paginated conversation/message APIs, case fields, ownership state, status events and errors. Authenticate real-time subscriptions and authorize each account/room. Support loading missed state after reconnect.
 - **Deliverable:** Typed interface contracts and protected live-update channel.
 - **Acceptance:** Only permitted records/events reach a staff session; the UI can reload authoritative state without relying on delivery of every socket event.
@@ -169,6 +176,8 @@ Testing starts with the feature it verifies; days 9–10 are for integrated acce
 ### S1-017 — Build conversation list and application shell
 
 - [ ] **Owner:** FE. **Dependencies:** S1-008, S1-016.
+- **FE scope:** Vietnamese inbox navigation, search, business-number/unread/handling filters, load-more, selection, ownership display, loading/empty/error/retry and mobile layouts using public synthetic fixtures. [Evidence](15-frontend-staging-and-inbox-verification.md).
+- [x] **S1-017-FE:** Complete with synthetic fixtures on 2026-09-27; desktop/mobile and browser acceptance verified. Live account-scoped integration remains dependent on paused S1-008/S1-016 BE. No transcript/send/takeover completion claimed.
 - **Work:** Create Vietnamese navigation and list states: bot handling, waiting, staff handling and completed. Show business identity, last message, unread state and assigned owner. Include loading, empty and failure states.
 - **Deliverable:** Usable staff inbox entry screen.
 - **Acceptance:** Staff can locate and open an active or waiting conversation without direct database access; long Vietnamese text does not break the layout.
@@ -438,3 +447,13 @@ Implementation evidence is recorded below; planned work is not counted as comple
 | S1-008-BE | Unassigned | Paused | No authentication backend implemented | Not run | Pending | Real authorization and D19 remain outstanding |
 
 Allowed statuses: planned, ready, in progress, paused, blocked, in review, done. For paused work, record the user direction and resumption condition. For blocked work, record the actual dependency, responsible person and next action. Keep secrets and raw personal transcripts outside this log.
+
+### 2026-09-27 frontend delivery update
+
+| Task | Status | Evidence / remaining dependency |
+|---|---|---|
+| S1-009-FE | Prepared; live deployment blocked | `frontend/vercel.json`, build metadata and runbook; user must provide Vercel team/project access and sign-in, then deployment/HTTPS acceptance can run |
+| S1-016-FE | Done for frontend scope | Typed contract, synthetic adapter and reload behavior; backend authorization/socket tests outstanding |
+| S1-017-FE | Done for frontend scope | Search, filters, load-more, ownership/unread display, selection, responsive shell and failure states; live integration outstanding |
+
+Owner: Codex. Verification: frontend lint/typecheck/production build, 19 demo/browser/contract cases plus 1 disabled-auth case passed. Reviewer: automated tests and Codex visual review; independent user review pending. [Detailed evidence and staging instructions](15-frontend-staging-and-inbox-verification.md). S1-006 and all backend work remain paused. No live staging or WhatsApp functionality is marked complete.

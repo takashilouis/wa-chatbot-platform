@@ -18,5 +18,12 @@ export const AUTH_MESSAGES = {
   unknown: 'Chưa thể đăng nhập lúc này. Vui lòng thử lại.',
 };
 export function safeReturnPath(value: string | null): string {
+  if (value === '/workspace/inbox') return value;
+  if (value?.startsWith('/workspace/inbox?')) {
+    const url = new URL(value, 'https://local.invalid');
+    const id = url.searchParams.get('conversation');
+    if (id && id.length <= 200) return `/workspace/inbox?conversation=${encodeURIComponent(id)}`;
+    return '/workspace/inbox';
+  }
   return value === '/workspace/access' ? value : '/workspace';
 }

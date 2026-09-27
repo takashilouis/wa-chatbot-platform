@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: 'auth.spec.ts',
+  testMatch: ['auth.spec.ts', 'inbox.spec.ts', 'inbox-contract.spec.ts'],
   workers: 1,
   use: { baseURL: 'http://127.0.0.1:3100', channel: process.platform === 'win32' ? 'msedge' : undefined, trace: 'retain-on-failure' },
   webServer: {
