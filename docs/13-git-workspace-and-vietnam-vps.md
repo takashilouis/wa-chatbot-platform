@@ -10,7 +10,7 @@ Source, manifests, lockfile, tests, Markdown decisions and design exports belong
 
 Before the initial commit, candidate files were checked for common credential patterns. Two matches were verified as SHA-512 package integrity values in the pnpm lockfile, not secrets. This focused inspection is not a guarantee that every possible secret format can be detected.
 
-Local initialization and the initial commit are complete on `main`. GitHub creation/push is pending authentication: the connector identifies the connected `takashilouis` profile but exposes no repository-creation operation; GitHub CLI is unavailable, Git Credential Manager lists no GitHub account, and the browser repository-creation page redirects to sign-in. The sign-in tab is left open for the user. No remote repository has been created and no files have been pushed. After sign-in, create private `takashilouis/wachatbot`, authenticate Git through its normal flow if required, push `main`, and verify the remote commit. Never paste access tokens into documentation or chat.
+Local initialization and the initial commit are complete on `main`. On 2026-09-26 the user created [takashilouis/wa-chatbot-platform](https://github.com/takashilouis/wa-chatbot-platform) and explicitly requested a push. GitHub metadata confirms this repository is public, empty before the initial push, and writable by the connected account. This user-created name and visibility supersede the earlier private `wachatbot` proposal. The local `origin` is to point to its HTTPS clone URL; publish `main` without force and verify that the remote commit matches local HEAD. Never paste access tokens into documentation or chat.
 
 ## Why node_modules exists at the root
 
@@ -73,3 +73,34 @@ Keeping API, worker, PostgreSQL and Redis close together avoids unnecessary WAN 
 Use a trial or one-month plan and measure from the actual VPS and intended staff networks: HTTPS latency/loss to relevant provider endpoints, representative complete AI responses, and end-to-end WhatsApp messages when implemented. Sample peak/off-peak times and report median, p95 and timeout rate; unauthenticated HTTP timing alone does not benchmark inference. Retain the existing demo goal of 90% of substantive responses within 15 seconds; it is an acceptance target, not a current result. Compare a Singapore deployment if international routing is the bottleneck.
 
 Ask the shortlisted host specifically for Linux VM/root access, Docker support, domestic versus international bandwidth guarantees, transfer caps/fair-use policy, backup restoration, resizing downtime, and the actual Vietnam data-center location. No machine purchase is necessary to finish the current FE task.
+
+## Bluehost comparison — 2026-09-25
+
+User compared 2 vCPU / 4 GB RAM / 100 GB NVMe against 4 vCPU / 8 GB RAM / 200 GB NVMe. Both are plausible for this project; prefer the 8 GB option for running Next.js, API, worker, PostgreSQL and Redis together. The 4 GB option is a budget demo starting point with prebuilt images, modest concurrency and memory monitoring. Neither is a measured capacity guarantee or a recommendation to run a large language model locally. More RAM matters more here than the extra disk or the DDR5 label.
+
+The supplied advertising URL could not be fetched; research used Bluehost's current canonical pages. [VPS plans](https://www.bluehost.com/vps-hosting) advertise the matching self-managed sizes at $9.49/$12.99 monthly equivalents for 24 months, renewing at $11.99/$28.99. Listed upfront totals are $227.76/$311.76, excluding applicable taxes. Locations listed are Virginia, Arizona, London, Toronto and Amsterdam; Vietnam/Singapore are not listed. Confirm the exact checkout offer and region. “Unmetered” remains subject to usage conditions; it does not guarantee speed. The page includes an ambiguous generic resource-limit notice: clarify its applicability to allocated VPS CPU before committing.
+
+[Bluehost Docker hosting](https://www.bluehost.com/vps-hosting/docker) explicitly supports Docker with root access. Its self-managed support covers infrastructure; OS updates, containers, application deployment, monitoring and backups remain our responsibility. For this stack, choose plain Linux without unnecessary cPanel/WordPress extras.
+
+Recommendation: the 8 GB specification is a good fit for our intended small pilot, but Bluehost is only a conditional provider choice. Given Vietnamese staff, compare a Vietnam or Singapore host's actual routing and total renewal cost before buying a long term. No purchase or deployment is authorized by this comparison; backend remains paused. GitHub publication remains pending the previously requested sign-in.
+
+## Vercel frontend + VPS backend — 2026-09-25
+
+User proposed splitting hosting between Vercel and a 4 GB VPS. This is a recommended option for the small Phase 1 pilot, subject to measurement. Moving the Next.js build/runtime to Vercel reduces VPS workload, so **2 vCPU / 4 GB RAM / 100 GB NVMe** is a reasonable starting estimate for API, worker, PostgreSQL, Redis and an HTTPS reverse proxy. The earlier 8 GB preference assumed the frontend also ran on that VM. Neither estimate establishes measured capacity; backend load tests still remain outstanding.
+
+Proposed deployment:
+
+- `app.example.com`: Next.js frontend on Vercel, built there.
+- `api.example.com`: HTTPS API and future live inbox connection endpoint on VPS.
+- VPS private container network: API, bounded-concurrency worker, PostgreSQL and Redis. Meta webhooks go directly to the API. Hosted AI requests originate from the backend.
+- Off-VM backups; build backend images in CI rather than on the small running VM where possible. No local model inference or heavy document processing on this starting size.
+
+Staff browsers load the frontend from Vercel and call the VPS API. Use exact allowed CORS origins, server authorization and a deliberate Secure/HttpOnly cookie and CSRF design; sibling custom domains avoid relying on cross-site cookies between unrelated hosting domains. A same-origin proxy is an alternative supported by [Vercel external rewrites](https://vercel.com/docs/routing/rewrites), but adds routing and must be evaluated separately for live connections. These controls are design requirements, not implemented features: current login remains simulated and BE paused.
+
+Frontend delivery improves independently, but the bot's Meta/AI/backend response path does not pass through the frontend. Vercel cannot eliminate latency between a remote VPS and Meta/AI or staff API requests. If Next server rendering/functions call the API, choose a nearby function region; CDN asset delivery and function execution are different. See [Vercel function regions](https://vercel.com/docs/functions/configuring-functions/region).
+
+Keep worker concurrency and database connections modest, bound Redis memory/retention without evicting durable queue work, rotate logs and monitor CPU, available RAM, swap, restart/OOM events and response time. Upgrade toward 8 GB if sustained pressure, swapping or queue delays remain after tuning. Do not size solely by a user-count claim. Validate the existing five-conversation demo load on the deployed system.
+
+Cost: include VPS, backup/storage and the appropriate Vercel plan. [Vercel Hobby](https://vercel.com/docs/plans/hobby) is restricted to personal non-commercial use; do not assume a business chatbot can use free Hobby just because traffic is low. An appropriate paid plan may make a single larger VPS cheaper overall, while Vercel still offers convenient frontend deployment and previews.
+
+Decision status: recommendation documented, no purchase/deployment or backend resumption performed. Monorepo deployment configuration and real authentication must be completed before a real pilot.
