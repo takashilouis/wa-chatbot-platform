@@ -4,7 +4,7 @@ Baseline: 2026-09-24. Record new decisions below with date, owner and reason. Do
 
 ## Decision register
 
-2026-09-27: User authorized S1-009, S1-016 and S1-017 frontend implementation. Inbox uses public synthetic data until BE resumes. Vercel staging configuration is prepared; actual deployment requires the user's Vercel team/project access. Backend pause remains in force. See [delivery evidence](15-frontend-staging-and-inbox-verification.md).
+2026-09-27: User authorized S1-009, S1-016 and S1-017 frontend implementation, signed in to Vercel and requested deployment to continue. Frontend staging is live at https://wa-chatbot-platform-staging.vercel.app in the existing Hobby workspace. The separate staging project uses Vercel's Production slot for `main`, with explicit demo mode and only public synthetic data. No paid upgrade was selected. Backend pause remains in force; real authentication, messaging and persistence are outstanding. See [delivery evidence](15-frontend-staging-and-inbox-verification.md).
 
 | ID | Topic | Status | Decision / rationale |
 |---|---|---|---|

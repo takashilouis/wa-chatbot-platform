@@ -1,6 +1,6 @@
 # Vietnamese WhatsApp Assistant — Design and Delivery Plan
 
-Status (2026-09-25): S1-006 and backend implementation are temporarily paused because the GA laptop cannot install Docker/WSL2. S1-008-FE is complete and verified using clearly labeled public demo accounts. Real authentication and the parent S1-008 remain outstanding.
+Status (2026-09-27): S1-008-FE, S1-009-FE, S1-016-FE and S1-017-FE are complete for frontend scope. [Open the live staging demo](https://wa-chatbot-platform-staging.vercel.app). Select a demo account on the login page, then click **Đăng nhập**. S1-006 and backend implementation remain paused because the GA laptop cannot install Docker/WSL2. Real authentication, WhatsApp messaging and persistent storage remain outstanding. See [verification and deployment details](docs/15-frontend-staging-and-inbox-verification.md).
 
 Applications are separated into `frontend/` (Next.js website) and `backend/api/` / `backend/worker/` (retained scaffolds). They share a pnpm workspace. The user approved the high-level flowchart as a design direction; that does not mean every business rule is finalized.
 

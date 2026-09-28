@@ -109,9 +109,9 @@ Testing starts with the feature it verifies; days 9–10 are for integrated acce
 ### S1-009 — Deploy an early staging skeleton
 
 - [ ] **Owner:** BE + FE. **Dependencies:** S1-004, S1-006–008.
-- **FE status (2026-09-27):** Vercel configuration, build identification and process-only health implemented; live staging is blocked on Vercel team/project access and sign-in. No staging URL verified. [Setup/evidence](15-frontend-staging-and-inbox-verification.md).
+- **FE status (2026-09-27):** Complete for frontend scope. [Live staging](https://wa-chatbot-platform-staging.vercel.app) deployed from `3763fa6`; HTTPS, build identity, demo login/logout, inbox search/filters/selection, refresh and mobile smoke checks passed. [Setup/evidence](15-frontend-staging-and-inbox-verification.md).
 - [x] **S1-009-FE preparation:** Frontend deployment configuration and reproducible runbook.
-- [ ] **S1-009-FE deployment:** Deploy and verify HTTPS URL, build identity, demo login and inbox; waiting for user Vercel access.
+- [x] **S1-009-FE deployment:** Dedicated Vercel staging deployed and verified; public synthetic demo only.
 - [ ] **S1-009-BE — paused:** API/worker deployment and persistent infrastructure acceptance.
 - **Work:** Deploy website, API and worker with HTTPS, persistent database/queue, secrets and health/readiness checks. Separate staging configuration and data from future production. Record build/version identification.
 - **Deliverable:** Staging URL and reproducible deployment procedure.
@@ -452,8 +452,8 @@ Allowed statuses: planned, ready, in progress, paused, blocked, in review, done.
 
 | Task | Status | Evidence / remaining dependency |
 |---|---|---|
-| S1-009-FE | Prepared; live deployment blocked | `frontend/vercel.json`, build metadata and runbook; user must provide Vercel team/project access and sign-in, then deployment/HTTPS acceptance can run |
+| S1-009-FE | Done for frontend scope | Vercel staging Ready from `3763fa6`; live HTTPS/health/demo login/logout/inbox/mobile checks passed; [deployment evidence](15-frontend-staging-and-inbox-verification.md) |
 | S1-016-FE | Done for frontend scope | Typed contract, synthetic adapter and reload behavior; backend authorization/socket tests outstanding |
 | S1-017-FE | Done for frontend scope | Search, filters, load-more, ownership/unread display, selection, responsive shell and failure states; live integration outstanding |
 
-Owner: Codex. Verification: frontend lint/typecheck/production build, 19 demo/browser/contract cases plus 1 disabled-auth case passed. Reviewer: automated tests and Codex visual review; independent user review pending. [Detailed evidence and staging instructions](15-frontend-staging-and-inbox-verification.md). S1-006 and all backend work remain paused. No live staging or WhatsApp functionality is marked complete.
+Owner: Codex. Verification: frontend lint/typecheck/production build, 19 demo/browser/contract cases plus 1 disabled-auth case passed; Vercel cloud build and live frontend smoke checks passed. Reviewer: automated tests and Codex visual review; independent user review pending. [Detailed evidence and staging instructions](15-frontend-staging-and-inbox-verification.md). S1-006 and all backend work remain paused. Live frontend staging is complete; real WhatsApp functionality and the parent S1-009 remain incomplete.
