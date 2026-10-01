@@ -1,6 +1,6 @@
-# Development setup — frontend first
+# Development setup — frontend and backend
 
-Updated 2026-09-25. S1-006 and backend implementation are temporarily paused at the user's request. Docker/WSL2 are unavailable on the GA laptop. Neither is required for current frontend work.
+Updated 2026-09-29. User resumed S1-006 backend foundation work. The installed Docker engine is available and local PostgreSQL/Redis acceptance passed. Frontend remains independent. Follow the [backend manual test guide](16-s1-006-backend-manual-tests.md) for backend startup, verification and expected results.
 
 ## Start on this Windows laptop
 
@@ -27,7 +27,7 @@ Use Node 24.19.0 and pnpm 10.32.1, pinned in the manifests. With these approved 
 
 ```text
 pnpm install --frozen-lockfile
-pnpm setup
+pnpm run setup
 pnpm dev:frontend
 ```
 
@@ -39,10 +39,10 @@ On this already-installed checkout, `frontend.cmd install` refreshes dependencie
 
 ```text
 frontend/       Next.js staff website, frontend auth adapters and browser tests
-backend/api/    NestJS scaffold, paused
-backend/worker/ TypeScript worker scaffold, paused
+backend/api/    NestJS process foundation
+backend/worker/ TypeScript worker process foundation
 scripts/        Shared setup/launch/check utilities
-compose.yaml    Retained PostgreSQL/Redis configuration; not running here
+compose.yaml    PostgreSQL/Redis configuration with persistent local volumes
 ```
 
 These are separate packages and processes in one pnpm workspace, sharing a lockfile and common lint/TypeScript settings. They are not separate repositories. The FE does not import backend code or need a backend process.
@@ -55,10 +55,10 @@ These are separate packages and processes in one pnpm workspace, sharing a lockf
 | `pnpm test:frontend` | FE browser tests |
 | `pnpm smoke` | Running frontend page and process health |
 | `pnpm check` / `pnpm build` | Whole-workspace checks/builds; retained for future integration |
-| `pnpm dev:backend` | Explicit API/worker runner; paused, do not use for current FE work |
+| `pnpm dev:backend` | API/worker development runner with watchers |
 | `pnpm smoke:all` | All three processes; only useful when BE resumes |
 
-Frontend health is http://127.0.0.1:3000/health and reports process liveness only. Paused API and worker default to ports 3001 and 3002. PostgreSQL, Redis, Meta and AI readiness are not implied by a green health response.
+Frontend health is http://127.0.0.1:3000/health and reports process liveness only. API and worker default to ports 3001 and 3002. PostgreSQL, Redis, Meta and AI readiness are not implied by a green health response.
 
 ## Current limits and troubleshooting
 
@@ -70,3 +70,7 @@ Frontend health is http://127.0.0.1:3000/health and reports process liveness onl
 - Dependencies and generated files are ignored; do not remove the lockfile to resolve a version mismatch.
 
 See [S1-008 FE evidence](11-s1-008-frontend.md) for the implemented scope, test results and future integration contract.
+
+## Backend quick start
+
+Run `.\backend.cmd setup`, `.\backend.cmd infra-up`, `.\backend.cmd check` and `.\backend.cmd test`, then `.\backend.cmd`. In another terminal run `.\backend.cmd smoke` and `.\backend.cmd infra-check`. For production-style local execution use `.\backend.cmd build` followed by `.\backend.cmd start`. Stop processes with Ctrl+C; `.\backend.cmd infra-down` retains volumes. See [full cases](16-s1-006-backend-manual-tests.md).

@@ -83,8 +83,8 @@ Testing starts with the feature it verifies; days 9–10 are for integrated acce
 
 ### S1-006 — Scaffold application and reproducible development setup
 
-- [ ] **Owner:** BE + FE. **Dependencies:** S1-004.
-- **Status: TEMPORARILY PAUSED (2026-09-25, user direction).** Existing scaffold is retained in `frontend/` and `backend/`. GA laptop constraints prevent Docker/WSL2; PostgreSQL/Redis runtime acceptance remains unverified. Resume only when backend work is authorized with a suitable environment. No local Docker/WSL installation will be attempted. [Setup](09-development-setup.md) · [Historical evidence](10-s1-006-verification.md).
+- [x] **Owner:** BE + FE. **Dependencies:** S1-004.
+- **Status: COMPLETE (2026-09-29, S1-006 foundation scope).** User resumed backend work. The already-installed Docker engine is now available; PostgreSQL/Redis health, outage recovery and persistent volumes were verified. API/worker lint, type checks, builds, real-process tests, development/production launch and smoke passed. No Docker/WSL installation was performed. [Setup](09-development-setup.md) · [Current evidence and manual cases](16-s1-006-backend-manual-tests.md).
 - **Work:** Set up the proposed TypeScript web/API/worker structure, pinned dependencies, environment example without secrets, local database/queue startup and basic build/lint/type checks. Retain existing design documentation and exports.
 - **Deliverable:** Reproducible setup instructions and application skeleton.
 - **Acceptance:** A fresh authorized development environment can start the services and run checks from documented commands.
@@ -442,7 +442,7 @@ Implementation evidence is recorded below; planned work is not counted as comple
 
 | Task ID | Named owner | Status | Implementation reference | Test/evidence | Reviewer | Completion date / limitation |
 |---|---|---|---|---|---|---|
-| S1-006 | Codex | Paused | `frontend/`, `backend/`, `scripts/`, workspace manifests and `compose.yaml` | [Historical verification](10-s1-006-verification.md) | No independent reviewer | 2026-09-25: stopped at user's request; GA laptop prevents Docker/WSL2 |
+| S1-006 | Codex | Done | `frontend/`, `backend/`, `scripts/`, workspace manifests and `compose.yaml` | [Historical verification](10-s1-006-verification.md) | No independent reviewer | 2026-09-29: resumed; installed Docker available, runtime/persistence acceptance passed; [manual tests](16-s1-006-backend-manual-tests.md) |
 | S1-008-FE | Codex | Done (FE only) | `frontend/`, `frontend.cmd` | [FE verification](11-s1-008-frontend.md): lint/types/build, 12 browser cases, production smoke and visual inspection | Codex automated/visual review; user review pending | 2026-09-25: browser-only fixtures; no real authentication; parent S1-008 stays open |
 | S1-008-BE | Unassigned | Paused | No authentication backend implemented | Not run | Pending | Real authorization and D19 remain outstanding |
 
@@ -457,3 +457,7 @@ Allowed statuses: planned, ready, in progress, paused, blocked, in review, done.
 | S1-017-FE | Done for frontend scope | Search, filters, load-more, ownership/unread display, selection, responsive shell and failure states; live integration outstanding |
 
 Owner: Codex. Verification: frontend lint/typecheck/production build, 19 demo/browser/contract cases plus 1 disabled-auth case passed; Vercel cloud build and live frontend smoke checks passed. Reviewer: automated tests and Codex visual review; independent user review pending. [Detailed evidence and staging instructions](15-frontend-staging-and-inbox-verification.md). S1-006 and all backend work remain paused. Live frontend staging is complete; real WhatsApp functionality and the parent S1-009 remain incomplete.
+
+### 2026-09-29 S1-006 backend resumption
+
+User authorized backend resumption specifically for S1-006. Completed the foundation with a Windows backend launcher, backend-only check/test/build/start/smoke commands, uncached process health and six process integration tests. Existing Docker services passed real SELECT 1/PING, outage recovery and persistence across container recreation. S1-006 is checked complete; later backend tasks retain their own statuses and were not implemented implicitly. Independent user review/manual testing is pending. See [manual test guide and evidence](16-s1-006-backend-manual-tests.md).

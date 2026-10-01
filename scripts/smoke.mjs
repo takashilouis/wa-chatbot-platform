@@ -12,6 +12,7 @@ const urls = {
 };
 for (const [service, base] of Object.entries(urls)) {
   if (process.argv.includes('--frontend-only') && service !== 'web') continue;
+  if (process.argv.includes('--backend-only') && service === 'web') continue;
   const response = await fetch(`${base}/health`, { signal: AbortSignal.timeout(10000) });
   assert.equal(response.status, 200, `${service} health status`);
   const health = await response.json();
@@ -20,9 +21,11 @@ for (const [service, base] of Object.entries(urls)) {
   assert.equal(health.scope, 'process');
   console.log(`PASS ${service} process health`);
 }
-const page = await fetch(urls.web, { signal: AbortSignal.timeout(10000) });
-assert.equal(page.status, 200);
-assert.equal(new URL(page.url).pathname, '/login');
-// Production HTML may contain the Suspense fallback before browser hydration.
-assert.match(await page.text(), /Đăng nhập|Đang tải đăng nhập|Chế độ thử nghiệm/);
-console.log('PASS Vietnamese login route/HTML; browser tests verify the hydrated UI. No backend readiness implied.');
+if (!process.argv.includes('--backend-only')) {
+  const page = await fetch(urls.web, { signal: AbortSignal.timeout(10000) });
+  assert.equal(page.status, 200);
+  assert.equal(new URL(page.url).pathname, '/login');
+  // Production HTML may contain the Suspense fallback before browser hydration.
+  assert.match(await page.text(), /Đăng nhập|Đang tải đăng nhập|Chế độ thử nghiệm/);
+  console.log('PASS Vietnamese login route/HTML; browser tests verify the hydrated UI. No backend readiness implied.');
+}

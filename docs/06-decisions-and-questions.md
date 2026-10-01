@@ -4,6 +4,8 @@ Baseline: 2026-09-24. Record new decisions below with date, owner and reason. Do
 
 ## Decision register
 
+2026-09-29: User resumed backend implementation and specifically authorized S1-006. The already-installed Docker engine is functional; local infrastructure runtime acceptance is complete. This supersedes the blanket backend pause for S1-006 only. No VPS deployment, paid service, or later backend feature task was performed. [Evidence/manual tests](16-s1-006-backend-manual-tests.md).
+
 2026-09-27: User authorized S1-009, S1-016 and S1-017 frontend implementation, signed in to Vercel and requested deployment to continue. Frontend staging is live at https://wa-chatbot-platform-staging.vercel.app in the existing Hobby workspace. The separate staging project uses Vercel's Production slot for `main`, with explicit demo mode and only public synthetic data. No paid upgrade was selected. Backend pause remains in force; real authentication, messaging and persistence are outstanding. See [delivery evidence](15-frontend-staging-and-inbox-verification.md).
 
 | ID | Topic | Status | Decision / rationale |

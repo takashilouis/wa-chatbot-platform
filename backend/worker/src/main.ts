@@ -2,10 +2,13 @@ import { createServer } from 'node:http';
 
 // Process skeleton only. BullMQ consumers arrive in the durable-processing task.
 const port = Number(process.env.WORKER_PORT ?? 3002);
-if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('WORKER_PORT must be a valid TCP port');
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  console.error('WORKER_PORT must be a valid TCP port.');
+  process.exit(1);
+}
 
 const server = createServer((request, response) => {
-  if (request.method !== 'GET' || request.url !== '/health') {
+  if (request.method !== 'GET' || request.url?.split('?')[0] !== '/health') {
     response.writeHead(404).end();
     return;
   }

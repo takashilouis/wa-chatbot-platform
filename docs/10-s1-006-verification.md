@@ -2,7 +2,7 @@
 
 Date: 2026-09-25. Scope: application scaffold and reproducible local setup only.
 
-Current status: **temporarily paused at the user's request**. This is historical scaffold evidence; paths below predate the move from `apps/web` to `frontend`, and `apps/api` / `apps/worker` to `backend/api` / `backend/worker`. See [current setup](09-development-setup.md) and [S1-008 FE](11-s1-008-frontend.md). Docker/WSL2 will not be installed on this laptop.
+Current status: **S1-006 resumed and completed on 2026-09-29**. The installed Docker engine now supports verified PostgreSQL/Redis runtime and persistence checks. See [current evidence and manual tests](16-s1-006-backend-manual-tests.md). The remainder below preserves the 2026-09-25 historical evidence and its then-outstanding limitations. This is historical scaffold evidence; paths below predate the move from `apps/web` to `frontend`, and `apps/api` / `apps/worker` to `backend/api` / `backend/worker`. See [current setup](09-development-setup.md) and [S1-008 FE](11-s1-008-frontend.md). Docker/WSL2 will not be installed on this laptop.
 
 ## Implemented
 

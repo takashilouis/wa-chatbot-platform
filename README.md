@@ -1,6 +1,6 @@
 # Vietnamese WhatsApp Assistant — Design and Delivery Plan
 
-Status (2026-09-27): S1-008-FE, S1-009-FE, S1-016-FE and S1-017-FE are complete for frontend scope. [Open the live staging demo](https://wa-chatbot-platform-staging.vercel.app). Select a demo account on the login page, then click **Đăng nhập**. S1-006 and backend implementation remain paused because the GA laptop cannot install Docker/WSL2. Real authentication, WhatsApp messaging and persistent storage remain outstanding. See [verification and deployment details](docs/15-frontend-staging-and-inbox-verification.md).
+Status (2026-09-29): S1-008-FE, S1-009-FE, S1-016-FE and S1-017-FE are complete for frontend scope. [Open the live staging demo](https://wa-chatbot-platform-staging.vercel.app). Select a demo account on the login page, then click **Đăng nhập**. S1-006 backend foundation is complete after user-authorized resumption; the installed Docker engine is available and PostgreSQL/Redis persistence checks passed. See [backend startup and manual tests](docs/16-s1-006-backend-manual-tests.md). Real authentication, WhatsApp messaging, business data models and queue consumers remain outstanding. See [verification and deployment details](docs/15-frontend-staging-and-inbox-verification.md).
 
 Applications are separated into `frontend/` (Next.js website) and `backend/api/` / `backend/worker/` (retained scaffolds). They share a pnpm workspace. The user approved the high-level flowchart as a design direction; that does not mean every business rule is finalized.
 
@@ -45,3 +45,5 @@ The diagram is a functional architecture, not an AWS deployment commitment. Its 
 Update these documents when a decision changes. Record the decision and reason in the decision log; update the affected requirements, plan and tests together. Keep credentials and private customer conversations out of this repository. Link to redacted evidence rather than committing raw personal data.
 
 Initial documentation baseline: 2026-09-24, based on the design conversation and research performed earlier in this task.
+
+Backend foundation: run `.\backend.cmd` and use [these manual test cases](docs/16-s1-006-backend-manual-tests.md). Local Docker infrastructure is separate from the frontend deployment on Vercel.
